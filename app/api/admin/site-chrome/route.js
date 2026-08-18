@@ -1,0 +1,26 @@
+import { NextResponse } from "next/server";
+import { getSession } from "@/lib/auth-server";
+import { hasPageAccess } from "@/lib/admin-pages";
+import { saveSiteChromeContent } from "@/lib/site-chrome-content";
+
+export async function PUT(request) {
+  const session = await getSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (!hasPageAccess(session, "site-chrome")) {
+    return NextResponse.json({ error: "You don't have access to the Navbar & Footer settings." }, { status: 403 });
+  }
+
+  const body = await request.json().catch(() => null);
+  if (!body || typeof body !== "object") {
+    return NextResponse.json({ error: "Invalid content." }, { status: 400 });
+  }
+
+  try {
+    await saveSiteChromeContent(body);
+    return NextResponse.json({ ok: true });
+  } catch {
+    return NextResponse.json({ error: "Failed to save Navbar & Footer content." }, { status: 500 });
+  }
+}

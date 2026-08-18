@@ -1,0 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #2b2723;
+  /* Faint Carrara-marble veining over the base ivory-white — a handful of
+     soft, low-opacity grey streaks rather than a literal photo texture, so
+     it reads as "marble" at a glance without ever competing with content or
+     hurting text contrast. Kept subtle enough to disappear under any card
+     or section that sets its own background. */
+  background-image:
+    linear-gradient(115deg, transparent 38%, rgba(107, 114, 128, 0.05) 39%, transparent 41%),
+    linear-gradient(155deg, transparent 60%, rgba(107, 114, 128, 0.04) 61%, transparent 63%),
+    linear-gradient(20deg, transparent 22%, rgba(58, 53, 47, 0.035) 23%, transparent 25%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(156, 107, 62, 0.25);
+  color: #211d19;
+}
+
+.prose-content h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #211d19;
+}
+
+.prose-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #211d19;
+}
+
+.prose-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 1.75rem;
+  margin-bottom: 0.6rem;
+  color: #211d19;
+}
+
+.prose-content h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #211d19;
+}
+
+.prose-content h5 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #211d19;
+}
+
+.prose-content h6 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #211d19;
+}
+
+.prose-content p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+.prose-content strong {
+  color: #211d19;
+}
+
+.prose-content em {
+  font-style: italic;
+}
+
+.prose-content u {
+  text-decoration: underline;
+}
+
+.prose-content s,
+.prose-content strike {
+  text-decoration: line-through;
+}
+
+.prose-content ul,
+.prose-content ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  line-height: 1.75;
+}
+
+.prose-content ul {
+  list-style-type: disc;
+}
+
+.prose-content ol {
+  list-style-type: decimal;
+}
+
+.prose-content li {
+  margin-bottom: 0.25rem;
+}
+
+.prose-content blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid #9c6b3e;
+  color: rgba(33, 29, 25, 0.7);
+  font-style: italic;
+}
+
+.prose-content a {
+  color: #9c6b3e;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose-content img {
+  margin: 1.5rem 0;
+  border-radius: 1rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.prose-content .editor-image-figure {
+  margin: 1.5rem 0;
+}
+
+.prose-content .editor-image-figure img {
+  margin: 0;
+}
+
+.prose-content .editor-image-figure figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: rgba(33, 29, 25, 0.6);
+}
+
+.prose-content hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 1px solid rgba(58, 53, 47, 0.15);
+}
+
+.prose-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: rgba(33, 29, 25, 0.35);
+  pointer-events: none;
+  height: 0;
+}
+
+/* Pasted/inserted tables — both inside the admin editor and on the public
+   blog page, since both render through this same .prose-content class. */
+.prose-content .tableWrapper {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.prose-content table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.prose-content th,
+.prose-content td {
+  border: 1px solid rgba(58, 53, 47, 0.2);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  min-width: 3em;
+  line-height: 1.5;
+}
+
+.prose-content th {
+  background: rgba(33, 29, 25, 0.06);
+  font-weight: 700;
+  color: #211d19;
+}
+
+/* Only relevant inside the editor (Tiptap's Table extension adds these
+   classes for cell selection / column resizing); harmless no-ops on the
+   public page since neither class is ever present there. */
+.prose-content .selectedCell {
+  background: rgba(33, 29, 25, 0.1);
+}
+
+.prose-content .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #9c6b3e;
+  pointer-events: none;
+}
