@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Static reference sitemap for St Mark's Basilica Entry.
+
+  Note: this project already generates a LIVE sitemap at runtime from
+  app/sitemap.js, served automatically at https://www.stmarksbasilicaentry.com/sitemap.xml
+  — it stays in sync with the database (published blog posts, admin
+  noindex toggles, etc.) on every request, which this static file cannot.
+
+  This file is a static snapshot kept in the project root as requested.
+  Placed here (not /public), it is NOT served by Next.js at any URL — to
+  have a static file actually serve at /sitemap.xml instead of the dynamic
+  route, move it into /public and it will take precedence automatically.
+  Keep this updated by hand if you rely on it, or prefer the live one.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.stmarksbasilicaentry.com/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.stmarksbasilicaentry.com/blog</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.stmarksbasilicaentry.com/blog/st-marks-basilica-ticket-price-2026</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.stmarksbasilicaentry.com/blog/best-time-to-visit-st-marks-basilica</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.stmarksbasilicaentry.com/blog/pala-doro-guide</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.stmarksbasilicaentry.com/about</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.stmarksbasilicaentry.com/contact</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.stmarksbasilicaentry.com/privacy-policy</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>
