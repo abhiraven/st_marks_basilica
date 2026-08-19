@@ -22,16 +22,25 @@ async function getLatestPosts() {
   }
 }
 
-// The homepage's title/description come from the root layout (app/layout.js)
-// since there's no per-page SEO title/description field in the Home editor
-// yet — this sets the robots directive based on whether an admin checked
-// "Hide from search engines" for the homepage, and the canonical URL. Robots
-// is always set explicitly (rather than omitted when indexing is on) so the
-// page always renders exactly one <meta name="robots"> tag either way.
+// Homepage title/description are now editable from the admin panel (Home
+// Page -> SEO) via seo.title / seo.description, same as About, Contact, and
+// Privacy Policy. DEFAULT_HOME_CONTENT.seo in lib/home-content.js supplies
+// the fallback used on a fresh install or if either field is ever left
+// blank, so the <title>/<meta name="description"> tags are never empty.
+// This also sets the robots directive based on whether an admin checked
+// "Hide from search engines," and the canonical URL. Robots is always set
+// explicitly (rather than omitted when indexing is on) so the page always
+// renders exactly one <meta name="robots"> tag either way.
 export async function generateMetadata() {
   const { seo } = await getHomeContent();
   return {
+    title: seo?.title,
+    description: seo?.description,
     alternates: { canonical: "/" },
+    openGraph: {
+      title: seo?.title,
+      description: seo?.description,
+    },
     robots: seo?.noIndex
       ? { index: false, follow: false }
       : { index: true, follow: true },

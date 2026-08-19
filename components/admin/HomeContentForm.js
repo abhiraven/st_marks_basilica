@@ -89,7 +89,20 @@ export default function HomeContentForm({ initialContent }) {
         </button>
       </div>
 
-      <Section title="SEO" description="Search engine visibility for the homepage" defaultOpen>
+      <Section title="SEO" description="Page title, search-result description, and search engine visibility for the homepage" defaultOpen>
+        <Field
+          label="Page Title"
+          value={content.seo?.title}
+          onChange={(v) => update(["seo", "title"], v)}
+          hint="Shown as the browser tab title and the blue link in Google search results. Keep it under ~60 characters."
+        />
+        <Field
+          label="Meta Description"
+          value={content.seo?.description}
+          onChange={(v) => update(["seo", "description"], v)}
+          textarea
+          hint="The gray summary line under the title in Google search results. Keep it under ~160 characters."
+        />
         <Checkbox
           label="Hide this page from search engines (noindex, nofollow)"
           checked={content.seo?.noIndex}
