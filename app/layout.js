@@ -49,21 +49,19 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={playfair.variable}>
       <body className="bg-basilica-marble text-basilica-marbleBlack antialiased">
-        {/* Google tag (gtag.js) — loaded in the root layout so it's present
-            on every page (not just Home), which is what lets Analytics
-            track navigation across the whole site rather than only the
-            landing page. next/script with "afterInteractive" is the
-            Next.js-recommended way to load this: it loads after the page
-            is interactive instead of blocking the initial render.
-            Replace G-XXXXXXXXXX with this project's own GA4 measurement ID
-            before launch — it must not reuse another project's property. */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX" strategy="afterInteractive" />
+        {/* Google tag (gtag.js) — loaded in the root layout (not just the
+            homepage) so Analytics tracks navigation across the whole site.
+            next/script with "afterInteractive" is the Next.js-recommended
+            way to load a tag like this: functionally the same as putting
+            the snippet directly in <head>, but it loads after the page is
+            interactive instead of blocking the initial render. */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-VRV0JVJK1B" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-XXXXXXXXXX');
+            gtag('config', 'G-VRV0JVJK1B');
           `}
         </Script>
         <SiteChrome siteChrome={siteChrome}>{children}</SiteChrome>
