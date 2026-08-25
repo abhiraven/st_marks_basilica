@@ -1,10 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 import TourCard from "@/components/TourCard";
 import FAQ from "@/components/FAQ";
 import MobileBookBar from "@/components/MobileBookBar";
 import { img, getPostCoverImage } from "@/lib/images";
 import { normalizeExternalUrl } from "@/lib/url";
 import Eyebrow from "@/components/Eyebrow";
+import Icon from "@/components/Icon";
 import { getHomeContent } from "@/lib/home-content";
 import { sql, ensureSchema } from "@/lib/db";
 
@@ -95,10 +97,10 @@ export default async function HomePage() {
           <div>
             <div className="flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-2 rounded-full bg-basilica-marbleBlack px-4 py-2 text-xs font-bold tracking-wide text-white">
-                <span aria-hidden="true">🏛</span> {hero.badgeText}
+                <Icon name="landmark" className="h-3.5 w-3.5" /> {hero.badgeText}
               </span>
               <span className="inline-flex items-center gap-2 rounded-full border border-basilica-marbleDark/25 bg-white px-4 py-1.5 text-xs font-semibold text-basilica-marbleBlack shadow-sm">
-                <span aria-hidden="true">🏛</span>
+                <Icon name="landmark" className="h-4 w-4" />
                 <span className="leading-tight">
                   {hero.subBadgeTitle}
                   <br />
@@ -123,9 +125,7 @@ export default async function HomePage() {
             <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 max-w-lg">
               {hero.features.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-basilica-marbleDark/10 text-base">
-                    {item.icon}
-                  </span>
+                  <Icon name={item.icon} className="h-8 w-8 shrink-0 text-basilica-bronze" />
                   <div>
                     <div className="text-sm font-semibold text-basilica-marbleBlack">{item.title}</div>
                     <div className="text-xs text-basilica-marbleBlack/60">{item.body}</div>
@@ -150,7 +150,11 @@ export default async function HomePage() {
             </div>
 
             <div className="mt-7 flex items-center gap-3">
-              <span className="text-basilica-copper tracking-tight">★★★★★</span>
+              <span className="flex items-center gap-0.5 text-basilica-copper">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <Icon key={i} name="star" filled className="h-4 w-4" />
+                ))}
+              </span>
               <span className="font-bold text-basilica-marbleBlack">{hero.ratingValue}</span>
               <span className="text-sm text-basilica-marbleBlack/60">{hero.ratingText}</span>
             </div>
@@ -158,11 +162,14 @@ export default async function HomePage() {
 
           {/* Right column: image collage */}
           <div className="relative">
-            <div className="relative rounded-3xl overflow-hidden border-4 border-white shadow-lg">
-              <img
-                src={hero.collageMainImage}
+            <div className="relative h-40 sm:h-52 lg:h-56 w-full rounded-3xl overflow-hidden border-4 border-white shadow-lg">
+              <Image
+                src={hero.collageMainImage || img("mosaicCeiling", 1200)}
                 alt={hero.collageMainImageAlt || "Gold Byzantine mosaic ceiling inside St Mark's Basilica"}
-                className="h-40 sm:h-52 lg:h-56 w-full object-cover"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+                priority
               />
             </div>
 
@@ -179,12 +186,18 @@ export default async function HomePage() {
                 "Piazza San Marco with the Doge's Palace",
                 "St Mark's Campanile bell tower above the square",
               ].map((fallbackAlt, i) => (
-                <img
+                <div
                   key={i}
-                  src={hero.collageImages?.[i]}
-                  alt={hero.collageImagesAlt?.[i] || fallbackAlt}
-                  className="h-20 sm:h-24 lg:h-28 w-full rounded-2xl border-4 border-white object-cover shadow"
-                />
+                  className="relative h-20 sm:h-24 lg:h-28 w-full overflow-hidden rounded-2xl border-4 border-white shadow"
+                >
+                  <Image
+                    src={hero.collageImages?.[i] || img(["piazza", "goldMosaic", "dogesPalace", "campanile"][i], 700)}
+                    alt={hero.collageImagesAlt?.[i] || fallbackAlt}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -196,9 +209,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-2 sm:grid-cols-4 gap-6">
           {trustBar.items.map((item, i) => (
             <div key={i} className="flex items-start gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-basilica-marbleDark/10 text-base">
-                {item.icon}
-              </span>
+              <Icon name={item.icon} className="h-8 w-8 shrink-0 text-basilica-bronze" />
               <div>
                 <div className="text-sm font-semibold text-basilica-marbleBlack">{item.title}</div>
                 <div className="text-xs text-basilica-marbleBlack/60">{item.body}</div>
@@ -231,9 +242,17 @@ export default async function HomePage() {
             {combosSection.title}
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-3">
-            {(combosSection.items || []).map((c) => (
+            {(combosSection.items || []).map((c, ci) => (
               <div key={c.title} className="rounded-2xl border border-basilica-marbleDark/15 bg-white overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
-                <img src={c.image} alt={c.imageAlt || c.title} className="h-36 w-full object-cover" />
+                <div className="relative h-36 w-full">
+                  <Image
+                    src={c.image || img(["dogesPalace", "byzantineDetail", "rialto"][ci % 3], 500)}
+                    alt={c.imageAlt || c.title}
+                    fill
+                    sizes="(min-width: 640px) 33vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
                 <div className="p-6 flex flex-1 flex-col">
                   <h3 className="font-display font-bold text-basilica-marbleBlack">{c.title}</h3>
                   <p className="mt-2 text-sm text-basilica-marbleBlack/70 flex-1">{c.description}</p>
@@ -263,9 +282,7 @@ export default async function HomePage() {
           {ticketPrices.items.map((item, i) => (
             <div key={i} id={item.anchorId || undefined} className="rounded-2xl border border-basilica-marbleDark/15 bg-white p-6">
               <div className="flex items-start gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-basilica-marbleDark/10 text-lg">
-                  {item.icon}
-                </span>
+                <Icon name={item.icon} className="h-9 w-9 shrink-0 text-basilica-bronze" />
                 <div>
                   <h3 className="font-display font-bold text-lg text-basilica-marbleBlack">{item.title}</h3>
                   <p className="mt-2 text-sm text-basilica-marbleBlack/70 leading-relaxed">
@@ -298,9 +315,7 @@ export default async function HomePage() {
           <div className="mt-8 grid gap-8 sm:grid-cols-3">
             {benefits.items.map((item, i) => (
               <div key={i}>
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-xl">
-                  {item.icon}
-                </span>
+                <Icon name={item.icon} className="h-9 w-9 text-basilica-copper" />
                 <h3 className="mt-4 font-semibold">{item.title}</h3>
                 <p className="mt-1 text-sm text-white/70">{item.body}</p>
               </div>
@@ -318,9 +333,7 @@ export default async function HomePage() {
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {highlights.items.map((item, i) => (
             <div key={i} className="rounded-2xl bg-white border border-basilica-marbleDark/15 p-6">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-basilica-marbleDark/10 text-base">
-                {item.icon}
-              </span>
+              <Icon name={item.icon} className="h-8 w-8 text-basilica-bronze" />
               <h3 className="mt-3 font-display font-bold text-basilica-marbleBlack">{item.title}</h3>
               <p className="mt-2 text-sm text-basilica-marbleBlack/70">{item.body}</p>
             </div>
@@ -368,11 +381,15 @@ export default async function HomePage() {
               <p><strong>Nearest metro:</strong> {location.metro}</p>
             </div>
           </div>
-          <img
-            src={location.image}
-            alt={location.imageAlt || "Piazza San Marco in front of St Mark's Basilica"}
-            className="h-56 w-full rounded-2xl object-cover"
-          />
+          <div className="relative h-56 w-full rounded-2xl overflow-hidden">
+            <Image
+              src={location.image || img("piazza", 800)}
+              alt={location.imageAlt || "Piazza San Marco in front of St Mark's Basilica"}
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 
@@ -383,11 +400,15 @@ export default async function HomePage() {
         <div className="mt-6 grid gap-6 sm:grid-cols-2">
           {nearby.items.map((item, i) => (
             <div key={i} className="rounded-2xl border border-basilica-marbleDark/15 bg-white overflow-hidden flex flex-col sm:flex-row">
-              <img
-                src={item.image || img(i === 0 ? "dogesPalace" : "campanile", 500)}
-                alt={item.imageAlt || item.title}
-                className="h-40 sm:h-auto sm:w-40 w-full object-cover"
-              />
+              <div className="relative h-40 w-full overflow-hidden sm:h-auto sm:w-40">
+                <Image
+                  src={item.image || img(i === 0 ? "dogesPalace" : "campanile", 500)}
+                  alt={item.imageAlt || item.title}
+                  fill
+                  sizes="(min-width: 640px) 160px, 100vw"
+                  className="object-cover"
+                />
+              </div>
               <div className="p-6">
                 <h3 className="font-display font-bold text-basilica-marbleBlack">{item.title}</h3>
                 <p className="mt-2 text-sm text-basilica-marbleBlack/70">{item.body}</p>
@@ -424,10 +445,12 @@ export default async function HomePage() {
                   className="group flex flex-col overflow-hidden rounded-2xl border border-basilica-marbleDark/15 bg-white hover:shadow-lg transition-shadow"
                 >
                   <div className="relative h-40 w-full overflow-hidden">
-                    <img
+                    <Image
                       src={getPostCoverImage(post)}
                       alt={post.cover_image_alt || post.title}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      fill
+                      sizes="(min-width: 640px) 33vw, 100vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-5">

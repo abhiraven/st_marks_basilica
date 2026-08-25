@@ -1,5 +1,8 @@
+import Image from "next/image";
 import Eyebrow from "@/components/Eyebrow";
+import Icon from "@/components/Icon";
 import { getContactContent } from "@/lib/contact-content";
+import { img } from "@/lib/images";
 
 export const dynamic = "force-dynamic";
 
@@ -24,17 +27,19 @@ export default async function ContactPage() {
       <p className="mt-2 text-basilica-marbleBlack/70 max-w-2xl">{hero.subtitle}</p>
 
       <div className="mt-10 overflow-hidden rounded-2xl border border-basilica-marbleDark/15 bg-white">
-        <img
-          src={image.src}
-          alt={image.alt}
-          className="h-56 w-full object-cover"
-        />
+        <div className="relative h-56 w-full">
+          <Image
+            src={image.src || img("gatehouses", 1200)}
+            alt={image.alt}
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
 
         <div className="p-6 sm:p-8 grid gap-6 sm:grid-cols-2">
           <div className="flex items-start gap-4">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-basilica-marbleDark/10 text-2xl">
-              ✉️
-            </span>
+            <Icon name="mail" className="h-10 w-10 shrink-0 text-basilica-bronze" />
             <div>
               <div className="text-lg font-semibold text-basilica-marbleBlack">Email</div>
               <a
@@ -46,9 +51,7 @@ export default async function ContactPage() {
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-basilica-marbleDark/10 text-2xl">
-              🕐
-            </span>
+            <Icon name="clock" className="h-10 w-10 shrink-0 text-basilica-bronze" />
             <div>
               <div className="text-lg font-semibold text-basilica-marbleBlack">Support Hours</div>
               <div className="text-lg text-basilica-marbleBlack/70">{supportHours}</div>

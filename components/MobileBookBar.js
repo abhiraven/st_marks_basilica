@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { img } from "@/lib/images";
+import Icon from "@/components/Icon";
 import { normalizeExternalUrl } from "@/lib/url";
 
 export default function MobileBookBar({ tour }) {
@@ -29,9 +31,11 @@ export default function MobileBookBar({ tour }) {
         className="flex items-center gap-3 border-t border-basilica-marbleDark/10 bg-white px-4 py-3 shadow-[0_-6px_24px_rgba(0,0,0,0.1)]"
         style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
       >
-        <img
+        <Image
           src={tour.image || img("gatehouses", 800)}
           alt={tour.imageAlt || tour.title}
+          width={56}
+          height={56}
           className="h-14 w-14 shrink-0 rounded-xl object-cover"
         />
 
@@ -42,7 +46,10 @@ export default function MobileBookBar({ tour }) {
           <div className="mt-1 flex items-center gap-1.5 text-xs text-basilica-marbleBlack/70">
             <span className="font-semibold text-basilica-marbleBlack">From {tour.price}</span>
             <span>·</span>
-            <span>★ {tour.rating} ({Number(tour.reviews || 0).toLocaleString()})</span>
+            <span className="inline-flex items-center gap-1">
+              <Icon name="star" filled className="h-3 w-3 text-basilica-copper" />
+              {tour.rating} ({Number(tour.reviews || 0).toLocaleString()})
+            </span>
           </div>
           <Link
             href="/#tours"

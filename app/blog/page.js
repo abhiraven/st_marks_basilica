@@ -1,7 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { sql, ensureSchema } from "@/lib/db";
 import { getPostCoverImage } from "@/lib/images";
 import Eyebrow from "@/components/Eyebrow";
+import Icon from "@/components/Icon";
 import BlogExplorer from "@/components/blog/BlogExplorer";
 import Newsletter from "@/components/blog/Newsletter";
 import { getHomeContent } from "@/lib/home-content";
@@ -69,13 +71,15 @@ export default async function BlogIndexPage() {
                 className="group grid overflow-hidden rounded-3xl border border-basilica-marbleDark/15 bg-white hover:shadow-xl transition-shadow sm:grid-cols-2"
               >
                 <div className="relative h-40 sm:h-full overflow-hidden">
-                  <img
+                  <Image
                     src={getPostCoverImage(featuredPost)}
                     alt={featuredPost.cover_image_alt || featuredPost.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    fill
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <span className="absolute left-4 top-4 rounded-full bg-basilica-bronze px-3 py-1 text-xs font-bold text-white shadow">
-                    ★ Featured
+                  <span className="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full bg-basilica-bronze px-3 py-1 text-xs font-bold text-white shadow">
+                    <Icon name="star" filled className="h-3 w-3" /> Featured
                   </span>
                 </div>
                 <div className="flex flex-col justify-center p-5 sm:p-6">
@@ -109,7 +113,9 @@ export default async function BlogIndexPage() {
 
             {trendingPosts.length > 0 && (
               <div>
-                <h2 className="font-display text-lg font-bold text-basilica-marbleBlack">🔥 Trending Now</h2>
+                <h2 className="flex items-center gap-2 font-display text-lg font-bold text-basilica-marbleBlack">
+                  <Icon name="flame" filled className="h-5 w-5 text-basilica-bronze" /> Trending Now
+                </h2>
                 <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]">
                   {trendingPosts.map((post, i) => (
                     <Link
@@ -120,11 +126,13 @@ export default async function BlogIndexPage() {
                       <span className="font-display text-2xl font-bold text-basilica-marbleDark/30 shrink-0 sm:hidden">
                         0{i + 1}
                       </span>
-                      <div className="relative shrink-0 sm:w-full">
-                        <img
+                      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl sm:h-24 sm:w-full">
+                        <Image
                           src={getPostCoverImage(post)}
                           alt={post.cover_image_alt || post.title}
-                          className="h-14 w-14 sm:h-24 sm:w-full rounded-xl object-cover"
+                          fill
+                          sizes="(min-width: 640px) 180px, 56px"
+                          className="object-cover"
                         />
                         <span className="hidden sm:flex absolute -top-3 -left-2 h-8 w-8 items-center justify-center rounded-full bg-basilica-marbleBlack font-display text-sm font-bold text-white shadow">
                           {i + 1}

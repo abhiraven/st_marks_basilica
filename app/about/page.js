@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Eyebrow from "@/components/Eyebrow";
 import { getAboutContent } from "@/lib/about-content";
+import { img } from "@/lib/images";
 
 export const dynamic = "force-dynamic";
 
@@ -25,12 +27,15 @@ export default async function AboutPage() {
 
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
         {images.map((image, i) => (
-          <img
-            key={i}
-            src={image.src}
-            alt={image.alt}
-            className="h-56 w-full rounded-2xl object-cover"
-          />
+          <div key={i} className="relative h-56 w-full overflow-hidden rounded-2xl">
+            <Image
+              src={image.src || img("gatehouses", 800)}
+              alt={image.alt}
+              fill
+              sizes="(min-width: 640px) 33vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         ))}
       </div>
 

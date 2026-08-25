@@ -66,7 +66,7 @@ export default async function AdminPostsPage() {
                   )}
                   {Boolean(post.noindex) && (
                     <span className="ml-2 inline-flex rounded-full bg-gray-100 text-gray-500 px-2.5 py-0.5 text-xs font-semibold">
-                      🚫 Noindex
+                      Noindex
                     </span>
                   )}
                 </td>

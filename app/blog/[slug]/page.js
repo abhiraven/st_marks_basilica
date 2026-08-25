@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { sql, ensureSchema } from "@/lib/db";
 import { getPostCoverImage } from "@/lib/images";
@@ -60,11 +61,15 @@ export default async function BlogPostPage({ params }) {
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start">
         <article className="max-w-3xl">
-          <img
-            src={getPostCoverImage(post)}
-            alt={post.cover_image_alt || post.title}
-            className="h-48 w-full rounded-2xl object-cover"
-          />
+          <div className="relative h-48 w-full overflow-hidden rounded-2xl">
+            <Image
+              src={getPostCoverImage(post)}
+              alt={post.cover_image_alt || post.title}
+              fill
+              sizes="(min-width: 1024px) 700px, 100vw"
+              className="object-cover"
+            />
+          </div>
 
           <h1 className="mt-6 font-display text-3xl sm:text-4xl font-bold text-basilica-marbleBlack">
             {post.title}
@@ -103,11 +108,15 @@ export default async function BlogPostPage({ params }) {
                   href={`/blog/${related.slug}`}
                   className="flex gap-3 rounded-2xl border border-basilica-marbleDark/15 bg-white p-3 hover:shadow-lg transition-shadow"
                 >
-                  <img
-                    src={getPostCoverImage(related)}
-                    alt={related.cover_image_alt || related.title}
-                    className="h-16 w-16 shrink-0 rounded-xl object-cover"
-                  />
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
+                    <Image
+                      src={getPostCoverImage(related)}
+                      alt={related.cover_image_alt || related.title}
+                      fill
+                      sizes="64px"
+                      className="object-cover"
+                    />
+                  </div>
                   <div>
                     <h3 className="font-display text-sm font-bold text-basilica-marbleBlack leading-snug">
                       {related.title}

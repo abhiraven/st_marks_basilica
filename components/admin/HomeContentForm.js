@@ -125,7 +125,7 @@ export default function HomeContentForm({ initialContent }) {
             { key: "rating", label: "Rating (e.g. 4.5)" },
             { key: "reviews", label: "Review Count" },
             { key: "price", label: "Price (e.g. €18)" },
-            { key: "badge", label: "Badge Text (optional, e.g. 🏆 Award-Winning Tour)" },
+            { key: "badge", label: "Badge Text (optional, e.g. Award-Winning Tour — shown with a star icon)" },
             { key: "url", label: "Booking URL (affiliate link)" },
           ]}
           addLabel="+ Add Tour Card"

@@ -381,9 +381,9 @@ export default function UserManagement({ initialUsers, currentUser }) {
       </div>
 
       {permUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto px-4 py-8">
           <div className="absolute inset-0 bg-black/40" onClick={closePermissions} />
-          <div className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+          <div className="relative flex w-full max-w-md max-h-[85vh] flex-col rounded-2xl bg-white p-6 shadow-xl overflow-y-auto">
             <h2 className="font-display text-lg font-bold text-basilica-marbleBlack">Page Access</h2>
             <p className="mt-1 text-sm text-basilica-marbleBlack/60">
               Choose which admin pages{" "}

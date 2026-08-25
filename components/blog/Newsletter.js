@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Icon from "@/components/Icon";
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
@@ -24,8 +25,9 @@ export default function Newsletter() {
       </p>
 
       {submitted ? (
-        <p className="mt-4 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-basilica-marbleBlack">
-          ✓ You're on the list — thanks for subscribing!
+        <p className="mt-4 flex items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-basilica-marbleBlack">
+          <Icon name="check" className="h-4 w-4 shrink-0 text-basilica-bronze" />
+          You're on the list — thanks for subscribing!
         </p>
       ) : (
         <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-2">
