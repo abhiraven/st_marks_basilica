@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "seed": "node scripts/seed.js",
-    "push-content-update": "node --import ./scripts/register-aliases.mjs scripts/push-content-update.js"
+    "push-content-update": "node --import ./scripts/register-aliases.mjs scripts/push-content-update.js",
+    "seed:post": "node scripts/seed-post.js"
   },
   "dependencies": {
     "next": "14.2.5",
