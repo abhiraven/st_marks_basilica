@@ -3,7 +3,8 @@ import Eyebrow from "@/components/Eyebrow";
 import { getAboutContent } from "@/lib/about-content";
 import { img } from "@/lib/images";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
 
 export async function generateMetadata() {
   const { seo } = await getAboutContent();

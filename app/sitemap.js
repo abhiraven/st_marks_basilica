@@ -10,7 +10,9 @@ const SITE_URL = "https://www.stmarksbasilicaentry.com";
 // URLs are noindex'd) can change at any time via the admin panel, so the
 // sitemap is generated fresh per-request rather than baked in at build
 // time, which also avoids needing a database connection during `next build`.
-export const dynamic = "force-dynamic";
+// Cached; purged on every admin save (see lib/revalidate).
+export const dynamic = "force-static";
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
 
 // Static pages, each paired with the same admin-controlled "seo.noIndex"
 // flag used by their own generateMetadata() — a page hidden from search

@@ -20,3 +20,7 @@ export default async function AdminLayout({ children }) {
     </div>
   );
 }
+
+// Admin always reads live data (the root layout caches DB reads for public pages).
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";

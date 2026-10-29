@@ -1,3 +1,4 @@
+import { withRevalidate } from "@/lib/revalidate";
 import { NextResponse } from "next/server";
 import { sql, ensureSchema } from "@/lib/db";
 import { getSession } from "@/lib/auth-server";
@@ -25,7 +26,7 @@ export async function GET(request) {
   return NextResponse.json({ posts });
 }
 
-export async function POST(request) {
+async function __POST(request) {
   const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -70,3 +71,5 @@ export async function POST(request) {
     return NextResponse.json({ error: "Failed to create post." }, { status: 500 });
   }
 }
+
+export const POST = withRevalidate(__POST);

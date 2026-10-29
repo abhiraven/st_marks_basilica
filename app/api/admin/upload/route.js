@@ -1,3 +1,4 @@
+import { withRevalidate } from "@/lib/revalidate";
 import { NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import { getSession } from "@/lib/auth-server";
@@ -52,7 +53,7 @@ async function matchesFileSignature(file, ext) {
   return signatures.some((sig) => sig.every((b, i) => head[i] === b));
 }
 
-export async function POST(request) {
+async function __POST(request) {
   const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -122,3 +123,5 @@ export async function POST(request) {
     return NextResponse.json({ error: "Failed to save the uploaded file." }, { status: 500 });
   }
 }
+
+export const POST = withRevalidate(__POST);

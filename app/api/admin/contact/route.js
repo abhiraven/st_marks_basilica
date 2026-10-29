@@ -1,9 +1,10 @@
+import { withRevalidate } from "@/lib/revalidate";
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth-server";
 import { hasPageAccess } from "@/lib/admin-pages";
 import { saveContactContent } from "@/lib/contact-content";
 
-export async function PUT(request) {
+async function __PUT(request) {
   const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -24,3 +25,5 @@ export async function PUT(request) {
     return NextResponse.json({ error: "Failed to save Contact page content." }, { status: 500 });
   }
 }
+
+export const PUT = withRevalidate(__PUT);

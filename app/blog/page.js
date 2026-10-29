@@ -8,7 +8,8 @@ import BlogExplorer from "@/components/blog/BlogExplorer";
 import Newsletter from "@/components/blog/Newsletter";
 import { getHomeContent } from "@/lib/home-content";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
 
 export const metadata = {
   title: "St Mark's Basilica Blog | Ticket Price, Guided Tours & Visitor Guides",

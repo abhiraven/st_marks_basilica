@@ -1,3 +1,4 @@
+import { withRevalidate } from "@/lib/revalidate";
 import { NextResponse } from "next/server";
 import { sql, ensureSchema } from "@/lib/db";
 import { getSession } from "@/lib/auth-server";
@@ -30,7 +31,7 @@ export async function GET(request, { params }) {
   return NextResponse.json({ post: rows[0] });
 }
 
-export async function PUT(request, { params }) {
+async function __PUT(request, { params }) {
   const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -84,7 +85,7 @@ export async function PUT(request, { params }) {
   }
 }
 
-export async function DELETE(request, { params }) {
+async function __DELETE(request, { params }) {
   const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -100,3 +101,6 @@ export async function DELETE(request, { params }) {
   await sql`DELETE FROM posts WHERE id = ${postId}`;
   return NextResponse.json({ ok: true });
 }
+
+export const PUT = withRevalidate(__PUT);
+export const DELETE = withRevalidate(__DELETE);

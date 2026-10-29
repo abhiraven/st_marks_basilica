@@ -5,7 +5,8 @@ import { sql, ensureSchema } from "@/lib/db";
 import { getPostCoverImage } from "@/lib/images";
 import { contentToHtml } from "@/lib/post-content";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
 
 async function getPost(slug) {
   try {

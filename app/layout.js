@@ -41,7 +41,6 @@ export const metadata = {
 // DB-backed page here already has its own "force-dynamic" export for.
 // Setting it once here at the root covers every current and future page,
 // instead of relying on each one to remember to add it individually.
-export const dynamic = "force-dynamic";
 
 export default async function RootLayout({ children }) {
   const siteChrome = await getSiteChromeContent();
@@ -69,3 +68,10 @@ export default async function RootLayout({ children }) {
     </html>
   );
 }
+
+// Neon compute fix: public pages are cached (ISR, `force-static` on each
+// public page) instead of querying the database on every request, so the
+// Neon compute can scale to zero between edits. Every successful admin save
+// calls revalidatePath("/", "layout") (see lib/revalidate), so edits still
+// appear on the live site immediately. Admin pages stay force-dynamic.
+export const revalidate = 86400; // admin saves purge instantly; this is only a daily safety refresh
